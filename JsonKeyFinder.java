@@ -20,7 +20,7 @@ public class JsonKeyFinder {
                         parseElement(jsonObject.get(key), keys, values);                    
                     } else {
                         // if object is primitive, call getKey
-                        values.add(jsonObject.get(key));
+                        values.add(checkType(jsonObject.get(key)));
                     }
                 }
             }
@@ -40,9 +40,14 @@ public class JsonKeyFinder {
         return values;
     }
     
-    // this method can be modified to suit your needs
-    public void getKey(JsonElement jsonElement){
-        //print out key (primitive)
-        System.out.println(jsonElement);
+    public Object checkType(JsonElement jsonElement){
+        JsonPrimitive jsonPrimitive = (JsonPrimitive) jsonElement;
+        if(jsonPrimitive.isBoolean()){
+            return jsonPrimitive.getAsBoolean();
+        } else if(jsonPrimitive.isNumber()){
+            return jsonPrimitive.getAsDouble();
+        }
+        
+        return jsonPrimitive.getAsString();
     }
 }
