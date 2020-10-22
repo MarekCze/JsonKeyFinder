@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 public class JsonKeyFinder {
-    public List<Object> parseElement(JsonElement jsonElement, List<String> keys, List<Object> values){
+    public Map<String, Object> parseElement(JsonElement jsonElement, List<String> keys, Map<String, Object> values){
         // check if element is a JsonObject
         if(jsonElement.isJsonObject()){
             // convert element to JsonObject
@@ -20,7 +20,7 @@ public class JsonKeyFinder {
                         parseElement(jsonObject.get(key), keys, values);                    
                     } else {
                         // if object is primitive, call getKey
-                        values.add(checkType(jsonObject.get(key)));
+                        values.put(key, checkType(jsonObject.get(key)));
                     }
                 }
             }
